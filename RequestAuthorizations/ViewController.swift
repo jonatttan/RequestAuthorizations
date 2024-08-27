@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     }
     
     private func requestMicrophoneAccess() {
-        AVCaptureDevice.requestAccess(for: AVMediaType.audio) { haveAccess in
+        AVAudioSession.sharedInstance().requestRecordPermission { haveAccess in
             if haveAccess {
                 debugPrint("We have access to the microphone!")
             } else {
