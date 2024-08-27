@@ -6,13 +6,39 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        self.view.backgroundColor = .red
+        self.view.backgroundColor = .cyan
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        requestCameraAccess()
+        requestMicrophoneAccess()
+    }
+    
+    private func requestCameraAccess() {
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { haveAccess in
+            if haveAccess {
+                debugPrint("We have access to the camara!")
+            } else {
+                debugPrint("Don't have access to the camera. 🫤")
+            }
+        }
+    }
+    
+    private func requestMicrophoneAccess() {
+        AVCaptureDevice.requestAccess(for: AVMediaType.audio) { haveAccess in
+            if haveAccess {
+                debugPrint("We have access to the microphone!")
+            } else {
+                debugPrint("Don't have access to the microphone. 🫤")
+            }
+        }
     }
 }
 
