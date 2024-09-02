@@ -8,18 +8,27 @@
 import UIKit
 import CoreLocation
 import Network
+import CoreBluetooth
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
+    
     var locationManager: CLLocationManager?
+    
+    var bluetoothManager: CBCentralManager?
+    var bluetoothDiscoveredDevices = [CBPeripheral]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .red
         requestLocation()
         requestNetwork()
-//        requestBluetooth()
+        requestBluetooth()
     }
     
+    func requestBluetooth() {
+        bluetoothManager = CBCentralManager(delegate: self,
+                                            queue: .main)
+    }
     
     func requestLocation() {
         locationManager = CLLocationManager()
@@ -31,6 +40,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         LocalNetworkAuthorization().requestAuthorization { success in
             print(success)
         }
+    }
+}
+
+extension ViewController: CBCentralManagerDelegate {
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        if central.state == .poweredOn {
+            bluetoothManager?.scanForPeripherals(withServices: nil)
+            print("Bluetooth is available 🙃.")
+        } else {
+            print("Bluetooth isn't available.")
+        }
+    }
+    
+    // MARK: - Showing bluetooth connected devices
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral,
+                        advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        if !bluetoothDiscoveredDevices.contains(peripheral) {
+            bluetoothDiscoveredDevices.append(peripheral)
+        }
+//        bluetoothDiscoveredDevices.forEach {
+//            if let name = $0.name {
+//             print(name)
+//            }
+//        }
     }
 }
 
