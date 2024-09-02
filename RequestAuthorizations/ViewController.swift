@@ -6,13 +6,47 @@
 //
 
 import UIKit
+import CoreLocation
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, CLLocationManagerDelegate {
+    var locationManager: CLLocationManager?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         self.view.backgroundColor = .red
+        requestLocation()
+//        requestNetwork()
+//        requestBluetooth()
+    }
+    
+    
+    func requestLocation() {
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.requestWhenInUseAuthorization()
     }
 }
 
+extension ViewController {
+    func locationManager(_ manager: CLLocationManager,
+                         didChangeAuthorization status: CLAuthorizationStatus) {
+        var locationStatus = ""
+        
+        switch status {
+        case .authorizedAlways:
+            locationStatus = "authorizedAlways"
+        case .authorizedWhenInUse:
+            locationStatus = "authorizedWhenInUse"
+        case .notDetermined:
+            locationStatus = "notDetermined"
+        case .restricted:
+            locationStatus = "restricted"
+        case .denied:
+            locationStatus = "denied"
+        default:
+            locationStatus = "Non mapped status"
+            break
+        }
+        print("Location status is: ", locationStatus)
+    }
+}
