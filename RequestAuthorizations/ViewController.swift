@@ -50,6 +50,9 @@ extension ViewController: CBCentralManagerDelegate {
             print("Bluetooth is available")
             self.bluetoothManager?.scanForPeripherals(withServices: nil,
                                                       options: [CBCentralManagerScanOptionAllowDuplicatesKey:false])
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.bluetoothManager?.stopScan()
+            }
         case .poweredOff:
             print("Turn on your bluetooth")
         default:
