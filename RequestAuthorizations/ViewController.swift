@@ -45,11 +45,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
 extension ViewController: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state == .poweredOn {
-            bluetoothManager?.scanForPeripherals(withServices: nil)
-            print("Bluetooth is available 🙃.")
-        } else {
-            print("Bluetooth isn't available.")
+        switch central.state {
+        case .poweredOn:
+            print("Bluetooth is available")
+            self.bluetoothManager?.scanForPeripherals(withServices: nil,
+                                                      options: [CBCentralManagerScanOptionAllowDuplicatesKey:false])
+        case .poweredOff:
+            print("Turn on your bluetooth")
+        default:
+            print("Some error accurred")
         }
     }
     
@@ -59,11 +63,11 @@ extension ViewController: CBCentralManagerDelegate {
         if !bluetoothDiscoveredDevices.contains(peripheral) {
             bluetoothDiscoveredDevices.append(peripheral)
         }
-//        bluetoothDiscoveredDevices.forEach {
-//            if let name = $0.name {
-//             print(name)
-//            }
-//        }
+        bluetoothDiscoveredDevices.forEach {
+            if let name = $0.name {
+             print(name)
+            }
+        }
     }
 }
 
