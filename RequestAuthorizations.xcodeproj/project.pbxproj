@@ -12,6 +12,7 @@
 		0918D4B02C7E64B90046E990 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0918D4AF2C7E64B90046E990 /* ViewController.swift */; };
 		0918D4B52C7E64BA0046E990 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0918D4B42C7E64BA0046E990 /* Assets.xcassets */; };
 		0918D4B82C7E64BA0046E990 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0918D4B62C7E64BA0046E990 /* LaunchScreen.storyboard */; };
+		0995CC292C8647920071156B /* LocalNetworkAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0995CC282C8647920071156B /* LocalNetworkAuthorization.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		0918D4B42C7E64BA0046E990 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0918D4B72C7E64BA0046E990 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0918D4B92C7E64BA0046E990 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0995CC282C8647920071156B /* LocalNetworkAuthorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNetworkAuthorization.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				0918D4AB2C7E64B90046E990 /* AppDelegate.swift */,
 				0918D4AD2C7E64B90046E990 /* SceneDelegate.swift */,
 				0918D4AF2C7E64B90046E990 /* ViewController.swift */,
+				0995CC282C8647920071156B /* LocalNetworkAuthorization.swift */,
 				0918D4B42C7E64BA0046E990 /* Assets.xcassets */,
 				0918D4B62C7E64BA0046E990 /* LaunchScreen.storyboard */,
 				0918D4B92C7E64BA0046E990 /* Info.plist */,
@@ -134,6 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0995CC292C8647920071156B /* LocalNetworkAuthorization.swift in Sources */,
 				0918D4B02C7E64B90046E990 /* ViewController.swift in Sources */,
 				0918D4AC2C7E64B90046E990 /* AppDelegate.swift in Sources */,
 				0918D4AE2C7E64B90046E990 /* SceneDelegate.swift in Sources */,

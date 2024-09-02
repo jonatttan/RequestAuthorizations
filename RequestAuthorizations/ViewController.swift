@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreLocation
+import Network
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     var locationManager: CLLocationManager?
@@ -15,7 +16,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         self.view.backgroundColor = .red
         requestLocation()
-//        requestNetwork()
+        requestNetwork()
 //        requestBluetooth()
     }
     
@@ -24,6 +25,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.requestWhenInUseAuthorization()
+    }
+    
+    func requestNetwork() {
+        LocalNetworkAuthorization().requestAuthorization { success in
+            print(success)
+        }
+    }
+}
+
+extension ViewController: NetServiceDelegate {
+    public func netServiceDidPublish(_ sender: NetService) {
+        print("Allow local network share")
     }
 }
 
