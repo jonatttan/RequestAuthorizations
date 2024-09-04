@@ -7,6 +7,7 @@
 
 import UIKit
 import EventKit
+import Contacts
 
 class ViewController: UIViewController {
     let center = UNUserNotificationCenter.current()
@@ -15,11 +16,22 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .red
 //        manageNotificationAccess()
-        calendarRequestAndVerifyFulllAccess()
+//        calendarRequestAndVerifyFulllAccess()
+        contactsRequestAndVerifyAccess()
     }
     
-    // func contactsRequestUse() {}
     // func faceIdRequestUse() {}
+    
+    // MARK: - Contacts
+    func contactsRequestAndVerifyAccess() {
+        let store = CNContactStore()
+        
+        DispatchQueue.main.async() {
+            store.requestAccess(for: .contacts) { hasAccess, _ in
+               print("Has contact access: ", hasAccess)
+           }
+        }
+    }
     
     // MARK: - Calendar
     func calendarRequestAndVerifyFulllAccess() {
