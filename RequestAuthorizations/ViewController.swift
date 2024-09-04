@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import EventKit
 
 class ViewController: UIViewController {
     let center = UNUserNotificationCenter.current()
@@ -13,9 +14,38 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .red
-        manageNotificationAccess()
+//        manageNotificationAccess()
+        calendarRequestAndVerifyFulllAccess()
     }
     
+    // func contactsRequestUse() {}
+    // func faceIdRequestUse() {}
+    
+    // MARK: - Calendar
+    func calendarRequestAndVerifyFulllAccess() {
+        let event = EKEventStore()
+        
+        event.requestFullAccessToEvents { hasAccess, error in
+            if let error = error {
+                return print(error.localizedDescription)
+            }
+            print("Has calendar access: ", hasAccess)
+        }
+    }
+    
+    func calendarVerifyAccess() {
+        let eventStatus = EKEventStore.authorizationStatus(for: .event)
+        switch eventStatus {
+        case .notDetermined:
+            print("notDetermined calendar access")
+        case .fullAccess, .restricted:
+            print("Has calendar access")
+        default:
+            print("Calendar access deny")
+        }
+    }
+    
+    // MARK: - Notifications
     func manageNotificationAccess() {
         Task {
             do {
@@ -43,9 +73,6 @@ class ViewController: UIViewController {
         try await center.requestAuthorization(options: [.alert, .sound, .badge])
     }
     
-    // Calendar
-    // Contacts
-    // FaceId
 }
 
 
