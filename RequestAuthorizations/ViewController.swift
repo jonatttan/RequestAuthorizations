@@ -16,9 +16,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .red
-//        manageNotificationAccess()
-//        calendarRequestAndVerifyFulllAccess()
-//        contactsRequestAndVerifyAccess()
+        manageNotificationAccess()
+        calendarRequestAndVerifyFulllAccess()
+        contactsRequestAndVerifyAccess()
         faceIdRequestAccess { biometryPermissionStatus in
             print("Has biometry access: ", biometryPermissionStatus)
         }
@@ -33,10 +33,10 @@ class ViewController: UIViewController {
         var error: NSError?
         
         guard laContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
-            debugPrint(error?.localizedDescription ?? "Don't have biometric method or deny access")
+            print(error?.localizedDescription ?? "Don't have biometric method or deny access")
             return completion(false)
         }
-        debugPrint(laContext.biometryType.typeName)
+        print("Available biometry type:", laContext.biometryType.typeName)
         
         guard (UserDefaults().value(forKey: kBiometryKey) as? Bool) != true else {
             return completion(true)
@@ -46,7 +46,7 @@ class ViewController: UIViewController {
         let reason = "We want check you."
         laContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
                                  localizedReason: reason) { [weak self] success, authError in
-            debugPrint("Biometry check status: \(success). Permission error: \(String(describing: authError?.localizedDescription))")
+            print("Biometry check status: \(success). Permission error: \(String(describing: authError?.localizedDescription))")
             DispatchQueue.main.async {
                 guard success else {
                     return completion(success)
