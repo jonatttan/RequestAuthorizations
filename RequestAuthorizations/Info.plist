@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Por questoes de segurança, nos permir sua autenticação por reconhecimento facial.</string>
 	<key>NSContactsUsageDescription</key>
-	<string>Por questoes de segurança, nos permira acessar seus contatos.</string>
+	<string>Por questoes de segurança, nos permir acessar seus contatos.</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>Por questoes de segurança, nos permira acessar seu calemdário.</string>
+	<string>Por questoes de segurança, nos permir acessar seu calemdário.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

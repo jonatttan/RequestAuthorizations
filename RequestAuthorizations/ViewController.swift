@@ -8,6 +8,7 @@
 import UIKit
 import EventKit
 import Contacts
+import LocalAuthentication
 
 class ViewController: UIViewController {
     let center = UNUserNotificationCenter.current()
@@ -17,10 +18,46 @@ class ViewController: UIViewController {
         self.view.backgroundColor = .red
 //        manageNotificationAccess()
 //        calendarRequestAndVerifyFulllAccess()
-        contactsRequestAndVerifyAccess()
+//        contactsRequestAndVerifyAccess()
+        faceIdRequestAccess { biometryPermissionStatus in
+            print("Has biometry access: ", biometryPermissionStatus)
+        }
     }
     
-    // func faceIdRequestUse() {}
+    // MARK: - FaceID/ Any Biometry
+    func faceIdRequestAccess(completion: @escaping(Bool) -> Void ) {
+        let kBiometryKey = "app_biometry"
+        
+        // MARK: - Verify biometry method availability
+        let laContext = LAContext()
+        var error: NSError?
+        
+        guard laContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
+            debugPrint(error?.localizedDescription ?? "Don't have biometric method or deny access")
+            return completion(false)
+        }
+        debugPrint(laContext.biometryType.typeName)
+        
+        guard (UserDefaults().value(forKey: kBiometryKey) as? Bool) != true else {
+            return completion(true)
+        }
+        
+        // MARK: - Request validation
+        let reason = "We want check you."
+        laContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
+                                 localizedReason: reason) { [weak self] success, authError in
+            debugPrint("Biometry check status: \(success). Permission error: \(String(describing: authError?.localizedDescription))")
+            DispatchQueue.main.async {
+                guard success else {
+                    return completion(success)
+                }
+                
+                UserDefaults().set(true, forKey: kBiometryKey)
+                self?.view.backgroundColor = .green
+                completion(true)
+            }
+        }
+    }
     
     // MARK: - Contacts
     func contactsRequestAndVerifyAccess() {
@@ -87,4 +124,19 @@ class ViewController: UIViewController {
     
 }
 
-
+extension LABiometryType {
+    var typeName: String {
+        switch self {
+        case .none:
+            "Non available"
+        case .touchID:
+            "Touch ID"
+        case .faceID:
+            "FaceId"
+        case .opticID:
+            "OpticID"
+        @unknown default:
+            "Unkwown biometric type"
+        }
+    }
+}
