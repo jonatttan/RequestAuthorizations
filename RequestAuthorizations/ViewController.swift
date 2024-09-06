@@ -55,6 +55,8 @@ extension ViewController: CBCentralManagerDelegate {
             }
         case .poweredOff:
             print("Turn on your bluetooth")
+        case .unauthorized:
+            print("Bluetooth unauthorized")
         default:
             print("Some error accurred")
         }
